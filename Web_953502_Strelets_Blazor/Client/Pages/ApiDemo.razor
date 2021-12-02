@@ -1,0 +1,28 @@
+﻿@using Web_953502_Strelets_Blazor.Client.Components
+
+@page "/apidemo"
+@inject HttpClient client
+
+<div class="container">
+    <CarsList @bind-Cars="@Cars" SelectedObjectChanged="ShowDetails"/>
+    <CarDetails @bind-Car="SelectedCar"></CarDetails>
+</div>
+
+@code
+{
+    [Parameter]
+    public IEnumerable<ListViewModel> Cars { get; set; }
+
+    [Parameter]
+    public DetailsViewModel SelectedCar { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cars = await client.GetFromJsonAsync<IEnumerable<ListViewModel>>("api/cars");
+    }
+
+    private async Task ShowDetails(int id)
+    {
+        SelectedCar = await client.GetFromJsonAsync<DetailsViewModel>($"api/cars/{id}");
+    }
+}

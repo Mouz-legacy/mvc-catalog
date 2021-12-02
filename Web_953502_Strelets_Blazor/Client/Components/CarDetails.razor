@@ -1,0 +1,23 @@
+﻿@using Web_953502_Strelets_Blazor.Client.Models
+
+@if (Car != null)
+{
+    <img src="@imageSrc" class="img-thumbnail" width="150" />
+    <div>
+        <p>@Car.CarName "@Car.Mark"</p>
+        <div class="badge badge-info ">
+            @Car.Color - Car color
+        </div>
+    </div>
+}
+@code 
+{
+
+    [Parameter]
+    public DetailsViewModel Car { get; set; }
+
+    [Parameter]
+    public EventCallback<DetailsViewModel> CarChanged { get; set; }
+
+    string imageSrc => $"images/{Car.Image}";
+}
